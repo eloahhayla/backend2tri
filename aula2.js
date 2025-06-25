@@ -1,5 +1,5 @@
 const listaNumeros = [20, 50, 100, 10, 30];
-const listaStrings = ["abaCaXi", "uva", "laranja", "banana"];
+const listaStrings = ["abaCaXi", "uVa", "laranja", "banana"];
 console.log(listaNumeros);
 console.log(listaStrings);
 
