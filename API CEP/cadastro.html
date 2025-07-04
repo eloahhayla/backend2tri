@@ -71,16 +71,28 @@
   </style>
   <script>
     function pesquisarCEP(cep){
-      const link = "https://viacep.com.br/ws/" + cep + "/json/?callback=preencherCEP"
+      erro.textContent = ""
+      //Expressão regular para validar o CEP.
+      var validacep = /^[0-9]{8}$/;
+      if(validacep.test(cep)){
+              const link = "https://viacep.com.br/ws/" + cep + "/json/?callback=preencherCEP"
       var script = document.createElement("script");
       script.src = link
       document.body.appendChild(script);
+      } else {
+        erro.textContent = "CEP digitado incorretamente"
+        document.getElementById("cep").value = "";
+      }
     }
     function preencherCEP(conteudo){
-      document.getElementById("rua").value = conteudo.logradouro;
-      document.getElementById("bairro").value = conteudo.bairro;
-      document.getElementById("cidade").value = conteudo.localidade;
-      document.getElementById("estado").value = conteudo.uf;
+      if ("erro" in conteudo) {
+        erro.textContent = "CEP não encontrado, confirme o CEP ou preencha os dado manualmente."
+      } else {
+          document.getElementById("rua").value = conteudo.logradouro;
+          document.getElementById("bairro").value = conteudo.bairro;
+          document.getElementById("cidade").value = conteudo.localidade;
+          document.getElementById("estado").value = conteudo.uf;
+      }
     }
   </script>
 </head>
@@ -101,6 +113,8 @@
 
       <label for="cep">CEP:</label>
       <input type="text" id="cep" class="input-texto" onblur="pesquisarCEP(this.value)" required>
+
+      <p id = "erro"></p>
 
       <label for="rua">Rua:</label>
       <input type="text" id="rua" class="input-texto" required>
